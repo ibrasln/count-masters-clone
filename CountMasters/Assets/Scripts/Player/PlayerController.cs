@@ -11,10 +11,12 @@ public class PlayerController : MonoBehaviour
     [Header("MOVEMENT")]
     #endregion
     [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float moveToPositionSpeed = 1f;
-    [SerializeField] private Transform target;
+    [SerializeField] private float moveSpeedInFight = 1f;
 
-    [SerializeField] private PlayerState playerState = PlayerState.IDLE;
+    public PlayerState playerState = PlayerState.IDLE;
+    public Transform target;
+    
+    private bool isTouchedEnemy;
     private Player player;
 
     private void Awake()
@@ -22,21 +24,8 @@ public class PlayerController : MonoBehaviour
         player = GetComponent<Player>();
     }
 
-    private void Start()
-    {
-        ObjectPool.instance.GetPooledObject(0);
-    }
-
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            float randomPositionRange = Random.Range(.25f, .75f);
-            GameObject human = ObjectPool.instance.GetPooledObject(0);
-            human.transform.position = new Vector3(Random.Range(transform.position.x - randomPositionRange, transform.position.x + randomPositionRange),
-                                                   transform.position.y,
-                                                   Random.Range(transform.position.z - randomPositionRange, transform.position.z + randomPositionRange));
-        }
         HandlePlayerState();
     }
 
@@ -45,6 +34,7 @@ public class PlayerController : MonoBehaviour
         switch(playerState)
         {
             case PlayerState.IDLE:
+                if (GameManager.instance.isGameStarted) playerState = PlayerState.WALKING;
                 break;
 
             case PlayerState.WALKING:
@@ -52,7 +42,10 @@ public class PlayerController : MonoBehaviour
                 break;
 
             case PlayerState.FIGHTING:
-
+                if(target.childCount <= 0)
+                {
+                    playerState = PlayerState.WALKING;
+                }
                 break;
         }
     }
@@ -68,6 +61,4 @@ public class PlayerController : MonoBehaviour
             player.movementByTransformEvent.CallMovementByTransform(moveSpeed, new(h, 0, 0));
         }
     }
-
-
 }

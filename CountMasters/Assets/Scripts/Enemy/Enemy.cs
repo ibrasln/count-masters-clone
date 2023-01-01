@@ -16,4 +16,6 @@ public class Enemy : MonoBehaviour
         movementToPositionEvent = GetComponent<MovementToPositionEvent>();
         idleEvent = GetComponent<IdleEvent>();
     }
+
+
 }
