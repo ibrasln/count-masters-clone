@@ -15,8 +15,7 @@ public class PlayerController : MonoBehaviour
 
     public PlayerState playerState = PlayerState.IDLE;
     public Transform target;
-    
-    private bool isTouchedEnemy;
+
     private Player player;
 
     private void Awake()
