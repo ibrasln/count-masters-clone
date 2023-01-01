@@ -29,9 +29,6 @@ public class MovementToPosition : MonoBehaviour
     private void MoveObject(float speed, Vector3 targetPosition)
     {
         Vector3 unitVector = Vector3.Normalize(targetPosition - transform.position);
-
-        Debug.Log(unitVector);
-
-        transform.Translate(Time.deltaTime * speed * unitVector);
+        transform.Translate(speed * Time.deltaTime *  unitVector);
     }
 }

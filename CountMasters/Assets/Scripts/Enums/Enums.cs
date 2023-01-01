@@ -4,3 +4,15 @@ public enum PlayerState
     WALKING,
     FIGHTING
 }
+
+public enum EnemyState
+{
+    IDLE,
+    FIGHTING
+}
+
+public enum GateOperation
+{
+    SUM,
+    MULTIPLICATION
+}
